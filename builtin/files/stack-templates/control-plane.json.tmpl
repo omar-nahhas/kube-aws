@@ -56,6 +56,10 @@
             "PropagateAtLaunch": "true",
             "Value": ""
           }
+          {{range $n, $r := .ExtraCfnTags}}
+          ,
+          {{quote $n}}: {{toJSON $r}}
+          {{end}}
         ],
         "VPCZoneIdentifier": [
           {{range $index, $subnet := .Controller.Subnets}}
@@ -703,6 +707,10 @@
     {{end}}
   },
   "Outputs": {
+    {{range $n, $r := .ExtraCfnOutputs}}
+    ,
+    {{quote $n}}: {{toJSON $r}}
+    {{end}}
     {{ if not .Controller.IAMConfig.InstanceProfile.Arn }}
     "ControllerIAMRoleArn": {
       "Description": "The ARN of the IAM role for Controllers",
